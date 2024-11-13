@@ -9,7 +9,6 @@ const timeframes = [
 const mergedHours = timeframes.flat(); // all together
 
 const hours = {}; // object will hold hours and count of people that were present at that time
-
 // populating the hours object
 mergedHours.forEach((hour) => {
 	if (!hours[hour]) {
@@ -23,9 +22,9 @@ mergedHours.forEach((hour) => {
 const sortedHours = Object.entries(hours).sort((a, b) => b[1] - a[1]);
 
 const mostCommonHour = `${sortedHours[0][0]}:00`;
-const mostCommonRange = `${mostCommonHour}:00 - ${parseInt(mostCommonHour) + 1}:00`;
+const mostCommonRange = `${mostCommonHour} - ${sortedHours[1][0]}:00`;
 
 console.log(
 	`Most people have attended the party at ${mostCommonHour}`,
-	`\nMost people have attended the party at the timeframe of: ${mostCommonRange}`
+	`\nThe timeframe with the highest attendance at the party: ${mostCommonRange}`
 );
