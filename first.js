@@ -5,25 +5,24 @@
  4. რომელი ელემენტიც მეტი იქნება, ამ ელემენტით შევცვლით ყველა განსხვავებულს if F > B: B->F, else F->B
 */
 
-const initialState = ['F', 'B', 'B', 'F', 'F', 'B', 'F'];
+const hats = ['F', 'B', 'B', 'F', 'F', 'B', 'F'];
 
-const hats = {
-	F: 0,
-	B: 0,
-};
+let forward = 0;
+let backward = 0;
 
-initialState.forEach((hat) => {
+hats.forEach((hat) => {
 	switch (hat) {
 		case 'F':
-			hats.F++;
+			forward++;
 			break;
 		case 'B':
-			hats.B++;
+			backward++;
 			break;
 	}
 });
 
-const result = hats.F > hats.B ? initialState.map((hat) => 'F') : initialState.map((hat) => 'B');
-const minNumOfSwitches = Math.min(...Object.values(hats));
+const rotatedHats = forward > backward ? hats.map((hat) => 'F') : hats.map((hat) => 'B');
 
-console.log(`შეტრიალდა ${minNumOfSwitches} ქუდი`, `\n${result.join(', ')}`);
+const minNumOfSwitches = Math.min(forward, backward);
+
+console.log(`შეტრიალდა ${minNumOfSwitches} ქუდი და ახლა გვაქვს ასეთი მდგომარეობა:`, `\n\n${rotatedHats}`);
