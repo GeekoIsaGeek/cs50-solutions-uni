@@ -1,5 +1,4 @@
 /* Pseudo code:
- გვაქვს F-სგან და B-სგან შევსებული მასივი
  1. დაგვჭირდება დავითვალოთ რაოდენობრივად რამდენია თითოეული ელემენტი
  2. შემდეგ მასივის ყოველ ელემენტს შევამოწმებთ და თუ F ელემენტი შეგვხვდება მაშინ ვზრდით F-ის რაოდენობას, same for B
  3. მასივის ყველა ელემენტის შემოწმების მერე შევადარებთ ამ ელემენტების რაოდენობას
@@ -14,17 +13,17 @@ const hats = {
 };
 
 initialState.forEach((hat) => {
-	if (hat === 'F') {
-		hats.F++;
-	} else {
-		hats.B++;
+	switch (hat) {
+		case 'F':
+			hats.F++;
+			break;
+		case 'B':
+			hats.B++;
+			break;
 	}
 });
 
 const result = hats.F > hats.B ? initialState.map((hat) => 'F') : initialState.map((hat) => 'B');
 const minNumOfSwitches = Math.min(...Object.values(hats));
 
-console.log(
-	`There were only ${minNumOfSwitches} switches needed to make everyone wear their hats the same way!`,
-	`\n${result.join(', ')}`
-);
+console.log(`შეტრიალდა ${minNumOfSwitches} ქუდი`, `\n${result.join(', ')}`);
