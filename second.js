@@ -15,11 +15,11 @@ const timeframes = [
 	[5, 6, 7, 8], // (5-8)
 ];
 
-const mergedHours = timeframes.flat(); // merging all arrays into a single one, in other words flattening it
+const mergedHours = timeframes.flat(); 
 
-const peopleOccuranceByHours = {}; // declaring object that will hold hours and count of people that were present at those hours
+const peopleOccuranceByHours = {}; 
 
-// populating the peopleOccuranceByHours object
+
 mergedHours.forEach((hour) => {
 	if (!peopleOccuranceByHours[hour]) {
 		peopleOccuranceByHours[hour] = 1;
@@ -28,10 +28,8 @@ mergedHours.forEach((hour) => {
 	}
 });
 
-// sorting the hours object by count of people, that way we can get the most common hour
 const sortedHours = Object.entries(peopleOccuranceByHours).sort((a, b) => b[1] - a[1]);
 
-// getting the most common hour (key of the first element of the sorted array)
 const mostCommonHour = sortedHours[0][0];
 
 console.log(`Most people have attended the party at ${mostCommonHour}`);
