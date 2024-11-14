@@ -1,3 +1,12 @@
+/* Pseudo Code
+1. ვაერთიანებთ ყველა შუალედში შემავალ ელემენტებს მასივში
+2. გადავუვლით მასივის ყველა ელემენტს და აღვრიცხავთ თითოეული ელემენტის რაოდენობას, სხვა სიტყვებით, რამდენი ადამიანი იყო
+	კონკრეტულ დროს წვეულებაზე
+3. რამდენჯერაც გამეორდება დრო, იმდენჯერ გავზრდით/დავაინკრემენტებთ დამსწრეების რაოდენობას
+4. დავსორტავთ მიღებულ მასივს ადამიანების რაოდენობის მიხედვით და ამოვიღებთ პირველ ელემენტს, 
+	სადაც key იქნება დრო, value ხალხის რაოდენობა
+*/
+
 const timeframes = [
 	[6, 7, 8], // (6-8)
 	[7, 8, 9, 10], // (7-10)
@@ -6,10 +15,11 @@ const timeframes = [
 	[5, 6, 7, 8], // (5-8)
 ];
 
-const mergedHours = timeframes.flat(); // all together
+const mergedHours = timeframes.flat(); // merging all arrays into a single one, in other words flattening it
 
-const peopleOccuranceByHours = {}; // object will hold hours and count of people that were present at that time
-// populating the hours object
+const peopleOccuranceByHours = {}; // declaring object that will hold hours and count of people that were present at those hours
+
+// populating the peopleOccuranceByHours object
 mergedHours.forEach((hour) => {
 	if (!peopleOccuranceByHours[hour]) {
 		peopleOccuranceByHours[hour] = 1;
