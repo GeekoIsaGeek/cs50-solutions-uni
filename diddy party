@@ -1,0 +1,45 @@
+def max_celebs(intervals):
+    # Create a list of events (time, type)
+    events = []
+    for start, end in intervals:
+        events.append((start, "arrival"))
+        events.append((end, "departure"))
+
+    # Sort events by time, arrivals first if times match
+    events.sort(key=lambda x: (x[0], x[1] == "departure"))
+
+    # Sweep through the timeline
+    current_celebs = 0
+    max_celebs = 0
+    max_time = 0
+    active_times = []
+
+    for time, event in events:
+        if event == "arrival":
+            current_celebs += 1
+            active_times.append(time)
+        elif event == "departure":
+            active_times = [t for t in active_times if t >= time - 1]  # Keep only those within the 1-hour window
+            current_celebs = len(active_times)
+
+        # Update the maximum
+        if current_celebs > max_celebs:
+            max_celebs = current_celebs
+            max_time = time
+
+    return max_time - 1, max_time, max_celebs
+
+
+# Example input
+intervals = [
+    (6, 7),  # Beyonce
+    (7, 9),  # Taylor
+    (10, 11),  # Brad
+    (10, 12),  # Katy
+    (8, 10),  # Tom
+    (9, 11),  # Drake
+    (6, 8),  # Alicia
+]
+
+start_time, end_time, max_celebs = max_celebs(intervals)
+print(f"Visit from {start_time} to {end_time} to meet {max_celebs} celebrities.")
