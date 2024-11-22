@@ -1,0 +1,46 @@
+def max_weighted_celebs(intervals):
+    # Create events with weights
+    events = []
+    for start, end, weight in intervals:
+        events.append((start, "arrival", weight))
+        events.append((end, "departure", weight))
+
+    # Sort events by time, arrival before departure in case of ties
+    events.sort(key=lambda x: (x[0], x[1] == "departure"))
+
+    # Variables to track
+    current_weight = 0
+    max_weight = 0
+    max_interval_start = 0
+    active_celebs = []
+
+    for time, event_type, weight in events:
+        if event_type == "arrival":
+            active_celebs.append((time, weight))  # Add to active list
+            current_weight += weight
+        elif event_type == "departure":
+            # Remove weights outside the 1-hour window
+            active_celebs = [(t, w) for t, w in active_celebs if t >= time - 1]
+            current_weight = sum(w for _, w in active_celebs)
+
+        # Update max weight interval
+        if current_weight > max_weight:
+            max_weight = current_weight
+            max_interval_start = time - 1
+
+    return max_interval_start, max_interval_start + 1, max_weight
+
+
+# Example input (start, end, weight)
+intervals = [
+    (6, 7, 5),  # Beyonce
+    (7, 9, 3),  # Taylor
+    (10, 11, 1),  # Brad
+    (10, 12, 2),  # Katy
+    (8, 10, 4),  # Tom
+    (9, 11, 6),  # Drake
+    (6, 8, 7),  # Alicia
+]
+
+start_time, end_time, max_weight = max_weighted_celebs(intervals)
+print(f"Visit from {start_time} to {end_time} to maximize your weight score of {max_weight}.")
