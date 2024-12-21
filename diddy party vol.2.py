@@ -15,7 +15,7 @@ def max_weighted_celebs(intervals):
 
     for time, event_type, weight in events:
         if event_type == "arrival":
-            active_celebs.append((time, weight))  # Add to active list
+            active_celebs.append((time, weight))  
             current_weight += weight
         elif event_type == "departure":
 
