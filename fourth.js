@@ -8,8 +8,7 @@ const calculateHardnessCoefficient = async (floors, balls) => {
 
 	const R = Array.from({ length: floors }, (_, i) => i + 1).find((r) => Math.pow(r, balls) > floors);
 
-	let hardnessCoefficient;
-
+	let hardnessCoefficient = 0;
 	let floor = R;
 	let drops = 0;
 
@@ -21,36 +20,45 @@ const calculateHardnessCoefficient = async (floors, balls) => {
 
 	console.log(`Chosen radix (base) is: ${R}`);
 
-	balls--;
-	while (floor > 0 && floor <= floors) {
-		drops++;
-		console.log(`Dropping crystal ${balls + 1} from floor: ${floor}`);
-		const drop = await rl.question(`Did the crystal break (yes/no)?: `);
-		if (drop === 'yes') {
-			if (floor === 1) {
-				hardnessCoefficient = 0;
-				break;
-			}
-			// we need the highest value of hardnessCoefficient
-			if (balls > 0) {
-				floor--;
-				balls--;
-				hardnessCoefficient = floor > hardnessCoefficient ? floor : hardnessCoefficient;
+	while (balls > 0) {
+		balls--;
+		while (floor > 0 && floor <= floors) {
+			drops++;
+			console.log(`Dropping crystal ${balls + 1} from floor: ${floor}`);
+			const drop = await rl.question(`Did the crystal break (yes/no)?: `);
+			if (drop === 'yes') {
+				if (floor === 1) {
+					hardnessCoefficient = 0;
+					break;
+				}
+
+				if (balls > 0) {
+					floor--;
+					balls--;
+					hardnessCoefficient = Math.max(hardnessCoefficient, floor);
+				} else {
+					hardnessCoefficient = floor - 1;
+					break;
+				}
 			} else {
-				hardnessCoefficient = floor;
-				break;
+				if (floor === floors) {
+					hardnessCoefficient = floor;
+					break;
+				}
+				floor++;
 			}
-		} else {
-			if (floor === floors) {
-				hardnessCoefficient = floor;
-				break;
-			}
-			floor++;
 		}
+
+		// If the loop ends and floor === 1 with balls > 0, continue
+		if (floor === 1 && balls > 0) {
+			continue;
+		}
+		rl.close();
+		break;
 	}
 
-	rl.close();
-	console.log(`Hardness coefficient is: ${hardnessCoefficient}\nTotal number of drops: ${drops}`);
+	console.log(`Hardness coefficient is: ${hardnessCoefficient}`);
+	console.log(`Total number of drops: ${drops}`);
 };
 
 const handleSingleBallCase = async (hardnessCoefficient, drops, floors) => {
