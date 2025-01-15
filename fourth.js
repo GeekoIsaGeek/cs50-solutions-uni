@@ -1,9 +1,9 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 
-const rl = readline.createInterface({ input, output });
-
 const calculateHardnessCoefficient = async (floors, balls) => {
+	const rl = readline.createInterface({ input, output });
+
 	if (!floors || !balls) return;
 
 	const R = Array.from({ length: floors }, (_, i) => i + 1).find((r) => Math.pow(r, balls) > floors);
@@ -13,7 +13,7 @@ const calculateHardnessCoefficient = async (floors, balls) => {
 	let drops = 0;
 
 	if (balls === 1) {
-		const [hc, dropCount] = await handleSingleBallCase(hardnessCoefficient, drops, floors);
+		const [hc, dropCount] = await handleSingleBallCase(hardnessCoefficient, drops, floors, rl);
 		console.log(`Hardness coefficient is: ${hc}\nTotal number of drops: ${dropCount}`);
 		return;
 	}
@@ -61,7 +61,7 @@ const calculateHardnessCoefficient = async (floors, balls) => {
 	console.log(`Total number of drops: ${drops}`);
 };
 
-const handleSingleBallCase = async (hardnessCoefficient, drops, floors) => {
+const handleSingleBallCase = async (hardnessCoefficient, drops, floors, rl) => {
 	let floor = 1;
 
 	console.log('Dropping crystal from floor:', floor);
@@ -93,4 +93,15 @@ const handleSingleBallCase = async (hardnessCoefficient, drops, floors) => {
 	return [hardnessCoefficient, drops];
 };
 
-console.log(calculateHardnessCoefficient(5, 3));
+const run = async () => {
+	console.log('Running scenario 1...');
+	await calculateHardnessCoefficient(5, 3);
+
+	console.log('\nRunning scenario 2...');
+	await calculateHardnessCoefficient(3, 3);
+
+	console.log('\nRunning scenario 3...');
+	await calculateHardnessCoefficient(10, 5);
+};
+
+run();
