@@ -80,11 +80,11 @@ const handleSingleBallCase = async (hardnessCoefficient, drops, floors, rl) => {
 
 			const drop = await rl.question(`Did the crystal break (yes/no)?: `);
 			if (drop === 'yes') {
-				hardnessCoefficient = floor;
+				hardnessCoefficient = floor - 1;
 				break;
 			}
 			if (floor === floors) {
-				hardnessCoefficient = floor;
+				hardnessCoefficient = floor - 1;
 				break;
 			}
 		}
@@ -95,7 +95,7 @@ const handleSingleBallCase = async (hardnessCoefficient, drops, floors, rl) => {
 
 const run = async () => {
 	console.log('Running scenario 1...');
-	await calculateHardnessCoefficient(5, 3);
+	await calculateHardnessCoefficient(5, 1);
 
 	console.log('\nRunning scenario 2...');
 	await calculateHardnessCoefficient(3, 3);
